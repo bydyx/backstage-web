@@ -4,13 +4,14 @@
  * https://github.com/ant-design/ant-design-pro-layout
  */
 import ProLayout, { DefaultFooter } from '@ant-design/pro-layout';
-import React, { useEffect,useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useIntl, connect } from 'umi';
-import { GithubOutlined } from '@ant-design/icons';
+import { GithubOutlined, SisternodeOutlined } from '@ant-design/icons';
 import { Result, Button } from 'antd';
 import Authorized from '@/utils/Authorized';
 import RightContent from '@/components/GlobalHeader/RightContent';
 import { getAuthorityFromRouter } from '@/utils/utils';
+import iconUtil from '@/utils/iconUtil';
 import logo from '../assets/logo.svg';
 
 const noMatch = (
@@ -25,10 +26,10 @@ const noMatch = (
         }
     />
 );
-
 /**
  * use Authorized check all menu item
  */
+
 const menuDataRender = (menuList) =>
     menuList.map((item) => {
         const localItem = { ...item, children: item.children ? menuDataRender(item.children) : [] };
@@ -71,7 +72,6 @@ const BasicLayout = (props) => {
         },
     } = props;
     const [menuData, setMenuData] = useState([]);
-
     /**
      * constructor
      */
@@ -79,36 +79,18 @@ const BasicLayout = (props) => {
     useEffect(() => {
         if (dispatch) {
             dispatch({
-                type: 'user/fetchCurrent',
+                type: 'menu/getMenuList',
+                payload: setMenuData,
             });
         }
     }, []);
     useEffect(() => {
-        setMenuData(
-            [
-                {
-                    path: '/dashboard',
-                    name: 'dashboard',
-                    icon: 'dashboard',
-                    children: [
-                        {
-                            path: '/dashboard/analysis',
-                            name: 'analysis',
-                        },
-                        {
-                            path: '/dashboard/monitor',
-                            name: 'monitor',
-                        },
-                        {
-                            path: '/dashboard/workplace',
-                            name: 'workplace',
-                        },
-                    ],
-                },
-            ] || [],
-        );
+        if (dispatch) {
+            dispatch({
+                type: 'user/fetchCurrent',
+            });
+        }
     }, []);
-
     /**
      * init variables
      */
@@ -125,11 +107,10 @@ const BasicLayout = (props) => {
     const authorized = getAuthorityFromRouter(props.route.routes, location.pathname || '/') || {
         authority: undefined,
     };
-    const { formatMessage } = useIntl();
+    const {} = useIntl();
     return (
         <ProLayout
             logo={logo}
-            formatMessage={formatMessage}
             menuHeaderRender={(logoDom, titleDom) => (
                 <Link to="/">
                     {logoDom}
@@ -141,14 +122,13 @@ const BasicLayout = (props) => {
                 if (menuItemProps.isUrl || menuItemProps.children || !menuItemProps.path) {
                     return defaultDom;
                 }
+
                 return <Link to={menuItemProps.path}>{defaultDom}</Link>;
             }}
             breadcrumbRender={(routers = []) => [
                 {
                     path: '/',
-                    breadcrumbName: formatMessage({
-                        id: 'menu.home',
-                    }),
+                    breadcrumbName: '首页',
                 },
                 ...routers,
             ]}
@@ -160,8 +140,7 @@ const BasicLayout = (props) => {
                     <span>{route.breadcrumbName}</span>
                 );
             }}
-            footerRender={() => defaultFooterDom}
-            // menuDataRender={menuDataRender}
+            footerRender={() => defaultFooterDom} // menuDataRender={menuDataRender}
             menuDataRender={() => menuData}
             rightContentRender={() => <RightContent />}
             {...props}

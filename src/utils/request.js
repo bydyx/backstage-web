@@ -5,6 +5,7 @@
 import { extend } from 'umi-request';
 import { notification } from 'antd';
 import pageUtil from './pageUtil';
+import config from './config';
 const codeMessage = {
     200: '服务器成功返回请求的数据。',
     201: '新建或修改数据成功。',
@@ -56,6 +57,9 @@ const baseRequest = extend({
     // 默认请求是否带上cookie
 });
 const request = (url, options = {}) => {
+    if (url.indexOf('/api') == -1) {
+        url = config.serverUrl + url;
+    }
     return baseRequest(url, {
         ...options,
         headers: {

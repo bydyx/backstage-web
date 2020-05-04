@@ -1,7 +1,7 @@
 import request from '@/utils/request';
 
 export async function fakeAccountLogin(params) {
-    return request('/server/noLogin/login', {
+    return request('/noLogin/login', {
         method: 'POST',
         data: params,
     });
