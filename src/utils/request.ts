@@ -4,8 +4,10 @@
  */
 import { extend } from 'umi-request';
 import { notification } from 'antd';
+import { PageUtil } from './pageUtil';
+import { Config } from './config';
+
 // import config from '@/utils/config';
-import pageUtil from '@/utils/pageUtil';
 
 const codeMessage = {
     200: '服务器成功返回请求的数据。',
@@ -56,15 +58,15 @@ const baseRequest = extend({
     credentials: 'include',
     // 默认请求是否带上cookie
 });
-const request = (url: string, options = {}) => {
+const request = (url: string, options: any = {}) => {
     if (url.indexOf('/api') == -1) {
         url = Config.serverUrl + url;
     }
-    return baseRequest(url, {
-        ...options,
-        headers: {
-            Authorization: pageUtil.getToken(),
-        },
-    });
+    if (url.indexOf('/noLogin') == -1) {
+        options.headers = {
+            Authorization: PageUtil.getToken(),
+        };
+    }
+    return baseRequest(url, options);
 };
 export default request;

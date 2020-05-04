@@ -8,3 +8,4 @@
 class Config {
    static serverUrl = 'http://39.106.184.95:8080';
 }
+export { Config };

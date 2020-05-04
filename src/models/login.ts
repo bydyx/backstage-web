@@ -4,6 +4,7 @@ import { history, Reducer, Effect } from 'umi';
 import { fakeAccountLogin } from '@/services/login';
 import { setAuthority } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
+import { PageUtil } from '@/utils/pageUtil';
 
 export interface StateType {
     status?: 'ok' | 'error';
@@ -61,6 +62,7 @@ const Model: LoginModelType = {
         logout() {
             const { redirect } = getPageQuery();
             // Note: There may be security issues, please note
+            PageUtil.logout();
             if (window.location.pathname !== '/user/login' && !redirect) {
                 history.replace({
                     pathname: '/user/login',
