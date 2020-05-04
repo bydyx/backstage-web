@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "description": "An out-of-box UI solution for enterprise applications",
-  "resolutions": {
-    "moment": "2.24.0"
-  },
   "scripts": {
     "analyze": "cross-env ANALYZE=1 umi build",
     "build": "umi build",
@@ -35,6 +32,11 @@
     "test:component": "umi test ./src/components",
     "tsc": "tsc"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint-staged"
+    }
+  },
   "lint-staged": {
     "**/*.less": "stylelint --syntax less",
     "**/*.{js,jsx,ts,tsx}": "npm run lint-staged:js",
@@ -48,19 +50,35 @@
     "not ie <= 10"
   ],
   "dependencies": {
-    "@ant-design/icons": "^4.1.0",
+    "@ant-design/icons": "^4.0.0",
     "@ant-design/pro-layout": "^5.0.8",
     "@ant-design/pro-table": "2.2.1",
+    "@antv/data-set": "^0.11.4",
+    "@antv/l7": "^2.2.2",
+    "@antv/l7-maps": "^2.2.2",
+    "@types/lodash.debounce": "^4.0.6",
+    "@types/lodash.isequal": "^4.5.5",
     "antd": "^4.0.0",
+    "bizcharts": "^3.5.9",
+    "bizcharts-plugin-slider": "^2.1.1",
     "classnames": "^2.2.6",
+    "dva": "^2.4.0",
     "lodash": "^4.17.11",
-    "moment": "2.24.0",
+    "lodash.debounce": "^4.0.8",
+    "lodash.isequal": "^4.5.0",
+    "mockjs": "^1.0.1-beta3",
+    "moment": "^2.24.0",
+    "numeral": "^2.0.6",
+    "nzh": "^1.0.3",
     "omit.js": "^1.0.2",
     "path-to-regexp": "2.4.0",
+    "prop-types": "^15.5.10",
     "qs": "^6.9.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-fittext": "^1.0.0",
     "react-helmet-async": "^1.0.4",
+    "react-router": "^4.3.1",
     "umi": "3.1.1",
     "umi-request": "^1.0.8",
     "use-merge-value": "^1.0.1"
