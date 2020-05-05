@@ -1,6 +1,15 @@
 import { message } from 'antd';
+import { PageUtil } from './pageUtil';
 
-const alertMsg = (msg: string, callback) => {
-    message.warning(msg, 2,() => callback());
+const warning = (msg: string, callback) => {
+    if (PageUtil.isUndefinedOrNull(callback)) {
+        message.warning(msg, 2);
+    } else {
+        message.warning(msg, 2, () => callback());
+    }
 };
-export default alertMsg;
+
+export {
+    warning,
+};
+

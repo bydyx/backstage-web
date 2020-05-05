@@ -5,9 +5,9 @@
 import { extend } from 'umi-request';
 import { PageUtil } from './pageUtil';
 import { Config } from './config';
-import alertMsg from './Alert';
+import { warning } from './Alert';
 
-enum  Code {
+enum Code {
     SUCCESS = 200,
     INVALID_TOKEN = 1001,
 }
@@ -17,10 +17,10 @@ enum  Code {
  */
 const errorHandler = (res) => {
     let { code, msg } = res;
-    switch(code){
+    switch (code) {
         case Code.INVALID_TOKEN:
             console.info(msg);
-            alertMsg(msg,PageUtil.gotoLogin);
+            warning(msg, PageUtil.gotoLogin);
             break;
     }
 };

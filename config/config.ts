@@ -62,141 +62,24 @@ export default defineConfig({
                 {
                     path: '/',
                     component: '../layouts/BasicLayout',
-                    Routes: ['src/pages/Authorized'],
-                    authority: ['admin', 'user'],
                     routes: [
                         {
-                            path: '/dashboard',
-                            name: 'dashboard',
-                            icon: 'dashboard',
-                            routes: [
-                                {
-                                    name: 'analysis',
-                                    icon: 'smile',
-                                    path: '/dashboard/analysis',
-                                    component: './dashboard/analysis',
-                                },
-                                {
-                                    name: 'monitor',
-                                    icon: 'smile',
-                                    path: '/dashboard/monitor',
-                                    component: './dashboard/monitor',
-                                },
-                                {
-                                    name: 'workplace',
-                                    icon: 'smile',
-                                    path: '/dashboard/workplace',
-                                    component: './dashboard/workplace',
-                                },
-                            ],
+                            name: 'menu',
+                            icon: 'smile',
+                            path: '/menu',
+                            component: './menu',
                         },
                         {
-                            path: '/form',
-                            icon: 'form',
-                            name: 'form',
-                            routes: [
-                                {
-                                    name: 'basic-form',
-                                    icon: 'smile',
-                                    path: '/form/basic-form',
-                                    component: './form/basic-form',
-                                },
-                                {
-                                    name: 'step-form',
-                                    icon: 'smile',
-                                    path: '/form/step-form',
-                                    component: './form/step-form',
-                                },
-                                {
-                                    name: 'advanced-form',
-                                    icon: 'smile',
-                                    path: '/form/advanced-form',
-                                    component: './form/advanced-form',
-                                },
-                            ],
+                            name: 'table-list',
+                            icon: 'smile',
+                            path: '/list/table-list',
+                            component: './list/table-list',
                         },
                         {
-                            path: '/list',
-                            icon: 'table',
-                            name: 'list',
-                            routes: [
-                                {
-                                    path: '/list/search',
-                                    name: 'search-list',
-                                    component: './list/search',
-                                    routes: [
-                                        {
-                                            path: '/list/search',
-                                            redirect: '/list/search/articles',
-                                        },
-                                        {
-                                            name: 'articles',
-                                            icon: 'smile',
-                                            path: '/list/search/articles',
-                                            component: './list/search/articles',
-                                        },
-                                        {
-                                            name: 'projects',
-                                            icon: 'smile',
-                                            path: '/list/search/projects',
-                                            component: './list/search/projects',
-                                        },
-                                        {
-                                            name: 'applications',
-                                            icon: 'smile',
-                                            path: '/list/search/applications',
-                                            component: './list/search/applications',
-                                        },
-                                    ],
-                                },
-                                {
-                                    name: 'table-list',
-                                    icon: 'smile',
-                                    path: '/list/table-list',
-                                    component: './list/table-list',
-                                },
-                                {
-                                    name: 'basic-list',
-                                    icon: 'smile',
-                                    path: '/list/basic-list',
-                                    component: './list/basic-list',
-                                },
-                                {
-                                    name: 'card-list',
-                                    icon: 'smile',
-                                    path: '/list/card-list',
-                                    component: './list/card-list',
-                                },
-                            ],
-                        },
-                        {
-                            path: '/profile',
-                            name: 'profile',
-                            icon: 'profile',
-                            routes: [],
-                        },
-                        {
-                            name: 'exception',
-                            icon: 'warning',
-                            path: '/exception',
-                            routes: [],
-                        },
-                        {
-                            name: 'account',
-                            icon: 'user',
-                            path: '/account',
-                            routes: [],
-                        },
-                        {
-                            name: 'editor',
-                            icon: 'highlight',
-                            path: '/editor',
-                            routes: [],
-                        },
-                        {
-                            path: '/',
-                            redirect: '/dashboard/analysis',
-                            authority: ['admin', 'user'],
+                            name: 'table-list',
+                            icon: 'smile',
+                            path: '/list/basic-list',
+                            component: './list/basic-list',
                         },
                         {
                             component: '404',

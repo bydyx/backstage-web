@@ -106,7 +106,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
     }, []);
     useEffect(() => {
         dispatch({
-            type: 'menuList/getMenuList',
+            type: 'menu/getMenuTree',
             payload: setMenuData,
         });
     }, []);

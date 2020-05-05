@@ -5,3 +5,9 @@ export async function getMenuList() {
         method: 'GET',
     });
 }
+export async function getMenuTree() {
+    return request('/menu/getTree', {
+        method: 'GET',
+    });
+}
+

@@ -1,5 +1,5 @@
 import { Effect, Reducer } from 'umi';
-import { getMenuList } from '@/services/menu';
+import { getMenuList, getMenuTree } from '@/services/menu';
 import iconUtil from '@/utils/iconUtil';
 
 export interface MenuModelType {
@@ -11,12 +11,11 @@ export interface MenuModelType {
         getMenuList: Effect;
     };
     reducers: {
-        changeMenuList: Reducer;
     };
 }
 
 const Model: MenuModelType = {
-    namespace: 'menuList',
+    namespace: 'menu',
     state: {
         menu: [],
     },
@@ -28,19 +27,18 @@ const Model: MenuModelType = {
                 item.children = item.childrenList;
             });
             payload(menuList);
-            yield put({
-                type: 'changeMenuList',
-                payload: menuList,
+        },
+
+        *getMenuTree({payload}, { call, put }) {
+            let { data: menuList } = yield call(getMenuTree);
+            menuList.forEach((item: any) => {
+                item.icon = iconUtil.getIconNode(item.icon);
+                item.children = item.childrenList;
             });
+            payload(menuList);
         },
     },
     reducers: {
-        changeMenuList(state, action) {
-            return {
-                ...state,
-                action,
-            };
-        },
     },
 };
 
