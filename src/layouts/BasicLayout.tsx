@@ -170,7 +170,8 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
             rightContentRender={() => <RightContent />}
             {...props}
             {...settings}
-        >
+        >   
+            <div id ='alert-msg'/>
             <Authorized authority={authorized!.authority} noMatch={noMatch}>
                 {children}
             </Authorized>

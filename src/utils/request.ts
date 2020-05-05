@@ -3,9 +3,9 @@
  * 更详细的 api 文档: https://github.com/umijs/umi-request
  */
 import { extend } from 'umi-request';
-import { notification } from 'antd';
 import { PageUtil } from './pageUtil';
 import { Config } from './config';
+import alertMsg from './Alert';
 
 enum  Code {
     SUCCESS = 200,
@@ -20,6 +20,7 @@ const errorHandler = (res) => {
     switch(code){
         case Code.INVALID_TOKEN:
             console.info(msg);
+            alertMsg(msg,PageUtil.gotoLogin);
             break;
     }
 };
