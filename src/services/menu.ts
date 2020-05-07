@@ -5,9 +5,22 @@ export async function getMenuList() {
         method: 'GET',
     });
 }
+
 export async function getMenuTree() {
     return request('/menu/getTree', {
         method: 'GET',
     });
 }
 
+export async function addMenu(data) {
+    return request('/menu/add', {
+        method: 'POST',
+        data: data,
+    });
+}
+export async function deleteMenu(data) {
+    return request('/menu/delete', {
+        method: 'POST',
+        data: data,
+    });
+}

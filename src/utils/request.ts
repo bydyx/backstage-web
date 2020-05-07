@@ -5,23 +5,22 @@
 import { extend } from 'umi-request';
 import { PageUtil } from './pageUtil';
 import { Config } from './config';
-import { warning } from './Alert';
+import { warning, success } from './Alert';
 
-enum Code {
+export enum ErrorCode {
     SUCCESS = 200,
     INVALID_TOKEN = 1001,
+    WRONG_PARAM = 1003,
 }
 
 /**
  * 异常处理程序
  */
-const errorHandler = (res) => {
-    let { code, msg } = res;
-    switch (code) {
-        case Code.INVALID_TOKEN:
-            console.info(msg);
-            warning(msg, PageUtil.gotoLogin);
-            break;
+const errorHandler = ({ code, msg }) => {
+    if (!PageUtil.isUndefinedOrNull(code)) {
+        if (ErrorCode[code] != 'undefined') {
+            warning(msg);
+        }
     }
 };
 
@@ -42,10 +41,20 @@ const request = (url: string, options: any = {}) => {
         };
     }
     return baseRequest(url, options).then((res) => {
-        if (Code.SUCCESS != res.code) {
+        if (ErrorCode.SUCCESS != res.code) {
             errorHandler(res);
         }
         return res;
     });
 };
 export default request;
+
+export function showResMsg({ code, msg },callback) {
+    if (!PageUtil.isUndefinedOrNull(code)) {
+        if (ErrorCode[code] != 'undefined' && code != ErrorCode.SUCCESS) {
+            warning(msg,callback);
+        } else {
+            success(msg,callback);
+        }
+    }
+}
