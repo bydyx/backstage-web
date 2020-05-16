@@ -1,5 +1,5 @@
 import { Effect, Reducer } from 'umi';
-import { getMenuList, getMenuTree, addMenu } from '@/services/menu';
+import { getMenuList, getMenuTree, addMenu, modifyMenu } from '@/services/menu';
 import iconUtil from '@/utils/iconUtil';
 import { ErrorCode } from '@/utils/request';
 import { success } from '@/utils/Alert';
@@ -40,6 +40,12 @@ const Model: MenuModelType = {
         },
         *add({ payload }, { call, put }) {
             let { code, msg } = yield call(addMenu, payload);
+            if (code == ErrorCode.SUCCESS) {
+                success(msg, () => location.reload());
+            }
+        },
+        *modify({ payload }, { call, put }) {
+            let { code, msg } = yield call(modifyMenu, payload);
             if (code == ErrorCode.SUCCESS) {
                 success(msg, () => location.reload());
             }

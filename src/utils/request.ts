@@ -20,6 +20,9 @@ const errorHandler = ({ code, msg }) => {
     if (!PageUtil.isUndefinedOrNull(code)) {
         if (ErrorCode[code] != 'undefined') {
             warning(msg);
+            if (code == ErrorCode.INVALID_TOKEN) {
+                PageUtil.gotoLogin();
+            }
         }
     }
 };
@@ -49,12 +52,12 @@ const request = (url: string, options: any = {}) => {
 };
 export default request;
 
-export function showResMsg({ code, msg },callback) {
+export function showResMsg({ code, msg }, callback) {
     if (!PageUtil.isUndefinedOrNull(code)) {
         if (ErrorCode[code] != 'undefined' && code != ErrorCode.SUCCESS) {
-            warning(msg,callback);
+            warning(msg, callback);
         } else {
-            success(msg,callback);
+            success(msg, callback);
         }
     }
 }

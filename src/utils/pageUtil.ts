@@ -33,7 +33,7 @@ class PageUtil {
         PageUtil.gotoLogin();
     }
     static gotoLogin() {
-        window.location.href = 'http://localhost:8000/user/login';
+        window.location.href = '/user/login';
     }
     static isUndefinedOrNull(obj: any) {
         return typeof obj == 'undefined' || obj == null;

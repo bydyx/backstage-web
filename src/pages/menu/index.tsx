@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
-import { Modal,Button } from 'antd';
+import { Modal, Button } from 'antd';
 import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import ProTable from '@ant-design/pro-table';
 import OperModal from './components/OperModal';
 import { deleteMenu } from '@/services/menu';
 import { showResMsg } from '@/utils/request';
+import { PageUtil } from '@/utils/pageUtil';
 const { confirm } = Modal;
 
 function showDeleteConfirm(menu) {
@@ -16,10 +17,9 @@ function showDeleteConfirm(menu) {
         okType: 'danger',
         cancelText: '取消',
         onOk() {
-            deleteMenu(menu)
-                .then((res)=>{
-                    showResMsg(res,()=>location.reload());
-                })
+            deleteMenu(menu).then((res) => {
+                showResMsg(res, () => location.reload());
+            });
         },
     });
 }
@@ -47,7 +47,7 @@ const columns = [
         title: '操作',
         render: (item) => (
             <span>
-                <a key="edit" onClick={(e) => openOperModal(true,item)}>
+                <a key="edit" onClick={(e) => openOperModal(true, item)}>
                     编辑
                 </a>
                 <a key="delete" onClick={() => showDeleteConfirm(item)}>
@@ -57,7 +57,7 @@ const columns = [
         ),
     },
 ];
-let openOperModal ;
+let openOperModal;
 function MenuTable(props) {
     const { dispatch } = props;
     const [menuList, setMenuList] = useState([]);
@@ -75,13 +75,18 @@ function MenuTable(props) {
     });
 
     const submit = (values) => {
+        let path = 'modify';
+        if (PageUtil.isUndefinedOrNull(values.id)) {
+            path = 'add';
+        }
+
         dispatch({
-            type: 'menu/add',
+            type: 'menu/' + path,
             payload: values,
         });
     };
 
-    openOperModal = (visible: boolean,selectMenu) => {
+    openOperModal = (visible: boolean, selectMenu) => {
         setVisible(visible);
         setSelectMenu(selectMenu);
     };

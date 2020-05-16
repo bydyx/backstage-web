@@ -1,26 +1,32 @@
 import { connect } from 'umi';
 import { useState } from 'react';
 import React from 'react';
-import { Modal, Form, Input } from 'antd';
+import { Modal, Form, Input, Select } from 'antd';
+import iconUtil from '@/utils/iconUtil';
 
 const FormItem = Form.Item;
 
+
 function OperModal(props) {
-    const { visible, selectMenu={}, dispatch } = props;
+    const { visible, selectMenu = {}, dispatch } = props;
     const [form] = Form.useForm();
     const { onSubmit: handleAdd, onCancel } = props;
     const okHandle = async () => {
         const fieldsValue = await form.validateFields();
         handleAdd(fieldsValue);
     };
+
     return (
-        <Modal
-            title="新建菜单"
-            visible={visible}
-            onOk={okHandle}
-            onCancel={() => onCancel()}
-        >
-            <Form form={form} labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} initialValues={selectMenu}>
+        <Modal title="新建菜单" visible={visible} onOk={okHandle} onCancel={() => onCancel()}>
+            <Form
+                form={form}
+                labelCol={{ span: 5 }}
+                wrapperCol={{ span: 15 }}
+                initialValues={selectMenu}
+            >
+                <FormItem name="id">
+                    
+                </FormItem>
                 <FormItem
                     label="名称"
                     name="name"
@@ -28,10 +34,18 @@ function OperModal(props) {
                 >
                     <Input placeholder="请输入" />
                 </FormItem>
-                <FormItem label="图标" name="icon">
+                <FormItem
+                    label="图标"
+                    name="icon"
+                    rules={[{ required: true, message: '请输入至少一个字符！', min: 1 }]}
+                >
                     <Input placeholder="请输入" />
                 </FormItem>
-                <FormItem label="路径" name="path">
+                <FormItem
+                    label="路径"
+                    name="path"
+                    rules={[{ required: true, message: '请输入至少一个字符！', min: 1 }]}
+                >
                     <Input placeholder="请输入" />
                 </FormItem>
             </Form>

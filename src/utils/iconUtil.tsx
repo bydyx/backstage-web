@@ -1,5 +1,6 @@
 import React from 'react';
 import { MenuOutlined, FormOutlined, TableOutlined } from '@ant-design/icons';
+import { IconMap } from 'antd/lib/result';
 
 const iconMap = {
     MenuOutlined: <MenuOutlined />,
@@ -11,6 +12,9 @@ const iconUtil = {
     getIconNode(iconName: string) {
         let iconNode = iconMap[iconName];
         return iconNode;
+    },
+    getIconMap() {
+        return IconMap;
     },
 };
 

@@ -18,6 +18,12 @@ export async function addMenu(data) {
         data: data,
     });
 }
+export async function modifyMenu(data) {
+    return request('/menu/modify', {
+        method: 'POST',
+        data: data,
+    });
+}
 export async function deleteMenu(data) {
     return request('/menu/delete', {
         method: 'POST',
