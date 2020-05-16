@@ -65,21 +65,23 @@ export default defineConfig({
                     routes: [
                         {
                             name: 'menu',
-                            icon: 'smile',
                             path: '/menu',
                             component: './menu',
                         },
                         {
                             name: 'table-list',
-                            icon: 'smile',
                             path: '/list/table-list',
                             component: './list/table-list',
                         },
                         {
                             name: 'table-list',
-                            icon: 'smile',
                             path: '/list/basic-list',
                             component: './list/basic-list',
+                        },
+                        {
+                            name: 'blog',
+                            path: '/blog',
+                            component: './blog',
                         },
                         {
                             component: '404',
