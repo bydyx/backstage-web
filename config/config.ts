@@ -79,9 +79,25 @@ export default defineConfig({
                             component: './list/basic-list',
                         },
                         {
+                            name: 'table-list',
+                            path: '/list/search/articles',
+                            component: './list/search/articles',
+                        },
+                        {
                             name: 'blog',
                             path: '/blog',
-                            component: './blog',
+                            routes: [
+                                {
+                                    name: 'blog',
+                                    path: '/blog',
+                                    component: './blog/list',
+                                },
+                                {
+                                    name: 'blog',
+                                    path: '/blog/edit',
+                                    component: './blog/edit',
+                                },
+                            ],
                         },
                         {
                             component: '404',

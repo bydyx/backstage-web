@@ -38,11 +38,9 @@ const request = (url: string, options: any = {}) => {
     if (url.indexOf('/api') == -1) {
         url = Config.serverUrl + url;
     }
-    if (url.indexOf('/noLogin') == -1) {
-        options.headers = {
-            Authorization: PageUtil.getToken(),
-        };
-    }
+    options.headers = {
+        Authorization: PageUtil.getToken(),
+    };
     return baseRequest(url, options).then((res) => {
         if (ErrorCode.SUCCESS != res.code) {
             errorHandler(res);
