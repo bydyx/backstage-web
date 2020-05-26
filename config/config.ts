@@ -88,14 +88,19 @@ export default defineConfig({
                             path: '/blog',
                             routes: [
                                 {
-                                    name: 'blog',
-                                    path: '/blog',
+                                    name: 'blogList',
+                                    path: '/blog/list',
                                     component: './blog/list',
                                 },
                                 {
-                                    name: 'blog',
+                                    name: 'editBlog',
                                     path: '/blog/edit',
                                     component: './blog/edit',
+                                },
+                                {
+                                    name: 'blogDetail',
+                                    path: '/blog/detail',
+                                    component: './blog/detail',
                                 },
                             ],
                         },

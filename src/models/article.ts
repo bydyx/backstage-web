@@ -4,6 +4,12 @@ const Model = {
     namespace: 'article',
     state: {
         articleList: [],
+        pagination: {
+            current: 1,
+            pageSize: 10,
+            hideOnSinglePage: false,
+            onChange: (e) => this.setPagination(e),
+        },
     },
     effects: {
         *getArticleList({ payload }, { call, put }) {
