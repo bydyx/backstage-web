@@ -7,8 +7,7 @@ const Model = {
         pagination: {
             current: 1,
             pageSize: 10,
-            hideOnSinglePage: false,
-            onChange: (e) => this.setPagination(e),
+            hideOnSinglePage: false
         },
     },
     effects: {
@@ -22,11 +21,15 @@ const Model = {
     },
     reducers: {
         showArticleList(state, { payload: { pageInfo, list: articleList } }) {
-            return {
+            let data = {
                 ...state,
-                ...pageInfo,
+                pagination: {
+                    ...state.pagination,
+                    ...pageInfo
+                },
                 articleList,
             };
+            return data;
         },
     },
 };

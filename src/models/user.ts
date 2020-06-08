@@ -1,6 +1,8 @@
-import { Effect, Reducer } from 'umi';
+import {Effect, Reducer} from 'umi';
 
-import { queryCurrent, query as queryUsers } from '@/services/user';
+import {queryCurrent, query as queryUsers, githubLogin} from '@/services/user';
+import {PageUtil} from "@/utils/pageUtil";
+import {userLogin} from "@/pages/user/login/service";
 
 export interface CurrentUser {
     avatar?: string;
@@ -41,20 +43,27 @@ const UserModel: UserModelType = {
     },
 
     effects: {
-        *fetch(_, { call, put }) {
+        * fetch(_, {call, put}) {
             const response = yield call(queryUsers);
             yield put({
                 type: 'save',
                 payload: response,
             });
         },
-        *fetchCurrent(_, { call, put }) {
+        * fetchCurrent(_, {call, put}) {
             const response = yield call(queryCurrent);
             yield put({
                 type: 'saveCurrentUser',
                 payload: response,
             });
         },
+        * githubLogin({payload}, {call}) {
+            const {code, data} = yield call(githubLogin, payload.data);
+            payload.closeLoading();
+            if (code === 200) {
+                PageUtil.loginSuccess(data);
+            }
+        }
     },
 
     reducers: {

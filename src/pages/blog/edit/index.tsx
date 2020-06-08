@@ -13,6 +13,7 @@ class ArticleDetail extends Component {
     }
 
     onFinish = (values) => {
+        console.info(values);
         values.categoryId = 1;
         values.tagIdList = [1];
         console.info(values);
@@ -22,9 +23,9 @@ class ArticleDetail extends Component {
         });
     };
 
-    render() {
+    componentDidUpdate = () => {
         // let { newArticleId } = this.props;
-        // if (newArticleId != -1) {
+        // if (newArticleId > -1) {
         //     this.props.history.push({
         //         pathname: '/blog/detail',
         //         state: {
@@ -32,6 +33,9 @@ class ArticleDetail extends Component {
         //         },
         //     });
         // }
+    };
+
+    render() {
         let article = {};
         if (!PageUtil.isUndefinedOrNull(this.props.location.state)) {
             article = this.props.location.state.article;

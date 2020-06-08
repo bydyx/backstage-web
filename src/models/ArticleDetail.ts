@@ -1,10 +1,12 @@
 import { getArticleDetail, publishArticle } from '@/services/article';
+import { ErrorCode } from '@/utils/request';
+import {PageUtil} from "@/utils/pageUtil";
 
 let Model = {
     namespace: 'ArticleDetail',
     state: {
         article: {},
-        newArticleId: -1
+        newArticleId: -1,
     },
     effects: {
         *getArticleDetail({ payload }, { call, put }) {
@@ -15,11 +17,14 @@ let Model = {
             });
         },
         *publishArticle({ payload }, { call, put }) {
-            let { data } = yield call(publishArticle, payload);
-            // yield put({
-            //     type: 'publishArticle',
-            //     payload: data,
-            // });
+            let { code, data } = yield call(publishArticle, payload);
+            if (code == ErrorCode.SUCCESS) {
+                PageUtil.forward("/blog/list");
+                // yield put({
+                //     type: 'publishArticle',
+                //     payload: data,
+                // });
+            }
         },
         *clear({}, { put }) {
             yield put({
@@ -32,9 +37,9 @@ let Model = {
         showArticle(state, { payload }) {
             return { ...state, article: payload };
         },
-        publishArticle(state, { payload }){
+        publishArticle(state, { payload }) {
             return { ...state, newArticleId: payload };
-        }
+        },
     },
 };
 

@@ -2,10 +2,10 @@
  * request 网络请求工具
  * 更详细的 api 文档: https://github.com/umijs/umi-request
  */
-import { extend } from 'umi-request';
-import { PageUtil } from './pageUtil';
-import { Config } from './config';
-import { warning, success } from './Alert';
+import {extend} from 'umi-request';
+import {PageUtil} from './pageUtil';
+import {Config} from './config';
+import {warning, success} from './Alert';
 
 export enum ErrorCode {
     SUCCESS = 200,
@@ -16,7 +16,7 @@ export enum ErrorCode {
 /**
  * 异常处理程序
  */
-const errorHandler = ({ code, msg }) => {
+const errorHandler = ({code, msg}) => {
     if (!PageUtil.isUndefinedOrNull(code)) {
         if (ErrorCode[code] != 'undefined') {
             warning(msg);
@@ -34,6 +34,24 @@ const baseRequest = extend({
     credentials: 'include',
     // 默认请求是否带上cookie
 });
+const get = (url, data) => {
+    return request(url, {
+        method: 'GET',
+        data: data,
+    });
+}
+const post = (url, data) => {
+    return request(url, {
+        method: 'post',
+        data: data,
+    });
+}
+
+export {
+    request,
+    get,
+    post
+}
 const request = (url: string, options: any = {}) => {
     if (url.indexOf('/api') == -1) {
         url = Config.serverUrl + url;
@@ -48,9 +66,8 @@ const request = (url: string, options: any = {}) => {
         return res;
     });
 };
-export default request;
 
-export function showResMsg({ code, msg }, callback) {
+export function showResMsg({code, msg}, callback) {
     if (!PageUtil.isUndefinedOrNull(code)) {
         if (ErrorCode[code] != 'undefined' && code != ErrorCode.SUCCESS) {
             warning(msg, callback);

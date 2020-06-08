@@ -1,4 +1,4 @@
-import request from '@/utils/request';
+import {request} from '@/utils/request';
 
 export async function getArticleList(data) {
     return request('/article/getArticleList', {
@@ -14,6 +14,7 @@ export async function getArticleDetail(data) {
 }
 
 export async function publishArticle(data) {
+    console.info(data);
     return request('/article/publishArticle', {
         method: 'POST',
         data: data,

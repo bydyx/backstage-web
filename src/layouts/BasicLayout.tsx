@@ -7,11 +7,9 @@ import ProLayout, {
     MenuDataItem,
     BasicLayoutProps as ProLayoutProps,
     Settings,
-    DefaultFooter,
 } from '@ant-design/pro-layout';
 import React, { useEffect, useState } from 'react';
 import { Link, useIntl, connect, Dispatch } from 'umi';
-import { GithubOutlined } from '@ant-design/icons';
 import { Result, Button } from 'antd';
 import Authorized from '@/utils/Authorized';
 import RightContent from '@/components/GlobalHeader/RightContent';
@@ -71,13 +69,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
      */
     const [menuData, setMenuData] = useState([]);
 
-    useEffect(() => {
-        if (dispatch) {
-            dispatch({
-                type: 'user/fetchCurrent',
-            });
-        }
-    }, []);
+
     useEffect(() => {
         dispatch({
             type: 'menu/getMenuTree',
@@ -143,7 +135,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
             rightContentRender={() => <RightContent />}
             {...props}
             {...settings}
-        >   
+        >
             <div id ='alert-msg'/>
             <Authorized authority={authorized!.authority} noMatch={noMatch}>
                 {children}

@@ -1,8 +1,8 @@
-import { Effect, history, Reducer } from 'umi';
-import { message } from 'antd';
-import { userLogin, getFakeCaptcha } from './service';
-import { getPageQuery, setAuthority } from './utils/utils';
-import { PageUtil } from '@/utils/pageUtil';
+import {Effect, history, Reducer} from 'umi';
+import {message} from 'antd';
+import {userLogin, getFakeCaptcha} from './service';
+import {getPageQuery, setAuthority} from './utils/utils';
+import {PageUtil} from '@/utils/pageUtil';
 
 export interface StateType {
     status?: 'ok' | 'error';
@@ -30,41 +30,24 @@ const Model: ModelType = {
     },
 
     effects: {
-        *login({ payload }, { call, put }) {
-            const {code ,data} = yield call(userLogin, payload);
+        * login({payload}, {call, put}) {
+            const {code, data} = yield call(userLogin, payload);
             yield put({
                 type: 'changeLoginStatus',
                 payload: data,
             });
-            PageUtil.setLoginUserInfo(data);
             if (code === 200) {
-                message.success('登录成功！');
-                const urlParams = new URL(window.location.href);
-                const params = getPageQuery();
-                let { redirect } = params as { redirect: string };
-                if (redirect) {
-                    const redirectUrlParams = new URL(redirect);
-                    if (redirectUrlParams.origin === urlParams.origin) {
-                        redirect = redirect.substr(urlParams.origin.length);
-                        if (redirect.match(/^\/.*#/)) {
-                            redirect = redirect.substr(redirect.indexOf('#') + 1);
-                        }
-                    } else {
-                        window.location.href = redirect;
-                        return;
-                    }
-                }
-                history.replace(redirect || '/');
+                PageUtil.loginSuccess(data);
             }
         },
 
-        *getCaptcha({ payload }, { call }) {
+        * getCaptcha({payload}, {call}) {
             yield call(getFakeCaptcha, payload);
         },
     },
 
     reducers: {
-        changeLoginStatus(state, { payload }) {
+        changeLoginStatus(state, {payload}) {
             setAuthority(payload.roles);
             return {
                 ...state,

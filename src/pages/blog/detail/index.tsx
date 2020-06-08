@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import MDEditor from '@uiw/react-md-editor';
-import { Button, Card, Divider, Avatar } from 'antd';
+import { Card, Divider, Avatar } from 'antd';
 import { connect } from 'dva';
 import Title from 'antd/lib/typography/Title';
 import edit from '@/assets/edit.svg';

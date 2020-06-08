@@ -1,13 +1,16 @@
-import { AlipayCircleOutlined, TaobaoCircleOutlined, WeiboCircleOutlined } from '@ant-design/icons';
-import { Alert, Checkbox } from 'antd';
-import React, { useState } from 'react';
-import { Dispatch, AnyAction, Link, connect } from 'umi';
-import { StateType } from './model';
+import {Alert} from 'antd';
+import React, {useState} from 'react';
+import {Dispatch, AnyAction, Link, connect} from 'umi';
+import {StateType} from './model';
 import styles from './style.less';
-import { LoginParamsType } from './service';
+import {LoginParamsType} from './service';
 import LoginFrom from './components/Login';
+import {GithubOutlined} from "@ant-design/icons/lib";
+import {Config} from "@/utils/config";
+import {PageUtil} from "@/utils/pageUtil";
 
-const { Tab, UserName, Password, Mobile, Captcha, Submit } = LoginFrom;
+const {Tab, UserName, Password, Submit} = LoginFrom;
+
 interface LoginProps {
     dispatch: Dispatch<AnyAction>;
     userAndlogin: StateType;
@@ -16,7 +19,7 @@ interface LoginProps {
 
 const LoginMessage: React.FC<{
     content: string;
-}> = ({ content }) => (
+}> = ({content}) => (
     <Alert
         style={{
             marginBottom: 24,
@@ -27,14 +30,30 @@ const LoginMessage: React.FC<{
     />
 );
 
+const gotoGithubLogin = () => {
+    window.location.href = Config.githubOAuthUrl;
+}
+
 const Login: React.FC<LoginProps> = (props) => {
-    const { userAndlogin = {}, submitting } = props;
-    const { status, type: loginType } = userAndlogin;
-    const [autoLogin, setAutoLogin] = useState(true);
+    const {userAndlogin = {}, submitting, dispatch} = props;
+    const {status, type: loginType} = userAndlogin;
     const [type, setType] = useState<string>('account');
 
+    let code = PageUtil.getUrlParam("code");
+    if (code) {
+        let closeLoading = PageUtil.showLoading("登录中...");
+        dispatch({
+            type: 'user/githubLogin',
+            payload: {
+                data: {
+                    code: code
+                },
+                closeLoading:closeLoading
+            },
+        });
+    }
+
     const handleSubmit = (values: LoginParamsType) => {
-        const { dispatch } = props;
         dispatch({
             type: 'userAndlogin/login',
             payload: {
@@ -48,11 +67,11 @@ const Login: React.FC<LoginProps> = (props) => {
             <LoginFrom activeKey={type} onTabChange={setType} onSubmit={handleSubmit}>
                 <Tab key="account" tab="账户密码登录">
                     {status === 'error' && loginType === 'account' && !submitting && (
-                        <LoginMessage content="账户或密码错误（admin/ant.design）" />
+                        <LoginMessage content="账户或密码错误"/>
                     )}
                     <UserName
                         name="userName"
-                        placeholder="用户名: admin or user"
+                        placeholder="用户名"
                         rules={[
                             {
                                 required: true,
@@ -62,7 +81,7 @@ const Login: React.FC<LoginProps> = (props) => {
                     />
                     <Password
                         name="passWord"
-                        placeholder="密码: ant.design"
+                        placeholder="密码"
                         rules={[
                             {
                                 required: true,
@@ -71,7 +90,7 @@ const Login: React.FC<LoginProps> = (props) => {
                         ]}
                     />
                 </Tab>
-                <Tab key="mobile" tab="手机号登录">
+                {/* <Tab key="mobile" tab="手机号登录">
                     {status === 'error' && loginType === 'mobile' && !submitting && (
                         <LoginMessage content="验证码错误" />
                     )}
@@ -102,25 +121,12 @@ const Login: React.FC<LoginProps> = (props) => {
                             },
                         ]}
                     />
-                </Tab>
-                <div>
-                    <Checkbox checked={autoLogin} onChange={(e) => setAutoLogin(e.target.checked)}>
-                        自动登录
-                    </Checkbox>
-                    <a
-                        style={{
-                            float: 'right',
-                        }}
-                    >
-                        忘记密码
-                    </a>
-                </div>
+                </Tab> */}
                 <Submit loading={submitting}>登录</Submit>
                 <div className={styles.other}>
                     其他登录方式
-                    <AlipayCircleOutlined className={styles.icon} />
-                    <TaobaoCircleOutlined className={styles.icon} />
-                    <WeiboCircleOutlined className={styles.icon} />
+                    {/*<AlipayCircleOutlined className={styles.icon} />*/}
+                    <GithubOutlined onClick={gotoGithubLogin} className={styles.icon}/>
                     <Link className={styles.register} to="/user/register">
                         注册账户
                     </Link>
@@ -132,9 +138,9 @@ const Login: React.FC<LoginProps> = (props) => {
 
 export default connect(
     ({
-        userAndlogin,
-        loading,
-    }: {
+         userAndlogin,
+         loading,
+     }: {
         userAndlogin: StateType;
         loading: {
             effects: {

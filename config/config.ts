@@ -1,8 +1,9 @@
 // https://umijs.org/config/
-import { defineConfig } from 'umi';
+import {defineConfig} from 'umi';
 import defaultSettings from './defaultSettings';
 import proxy from './proxy';
-const { REACT_APP_ENV } = process.env;
+
+const {REACT_APP_ENV} = process.env;
 export default defineConfig({
     hash: true,
     antd: {},
@@ -38,19 +39,16 @@ export default defineConfig({
                         },
                         {
                             name: 'login',
-                            icon: 'smile',
                             path: '/user/login',
                             component: './user/login',
                         },
                         {
                             name: 'register-result',
-                            icon: 'smile',
                             path: '/user/register-result',
                             component: './user/register-result',
                         },
                         {
                             name: 'register',
-                            icon: 'smile',
                             path: '/user/register',
                             component: './user/register',
                         },
@@ -64,24 +62,14 @@ export default defineConfig({
                     component: '../layouts/BasicLayout',
                     routes: [
                         {
+                            name: 'apiList',
+                            path: '/api',
+                            component: './api',
+                        },
+                        {
                             name: 'menu',
                             path: '/menu',
                             component: './menu',
-                        },
-                        {
-                            name: 'table-list',
-                            path: '/list/table-list',
-                            component: './list/table-list',
-                        },
-                        {
-                            name: 'table-list',
-                            path: '/list/basic-list',
-                            component: './list/basic-list',
-                        },
-                        {
-                            name: 'table-list',
-                            path: '/list/search/articles',
-                            component: './list/search/articles',
                         },
                         {
                             name: 'blog',
@@ -101,6 +89,11 @@ export default defineConfig({
                                     name: 'blogDetail',
                                     path: '/blog/detail',
                                     component: './blog/detail',
+                                },
+                                {
+                                    name: 'category',
+                                    path: '/blog/category',
+                                    component: './blog/category',
                                 },
                             ],
                         },

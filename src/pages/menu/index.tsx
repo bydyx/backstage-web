@@ -33,14 +33,13 @@ const columns = [
     },
     {
         align: 'left',
-        title: '图标',
-        dataIndex: 'icon',
-        width: '20%',
+        title: '页面路径',
+        dataIndex: 'path',
     },
     {
         align: 'left',
-        title: '页面路径',
-        dataIndex: 'path',
+        title: '父级',
+        dataIndex: 'parentName',
     },
     {
         align: 'center',
@@ -61,13 +60,14 @@ let openOperModal;
 function MenuTable(props) {
     const { dispatch } = props;
     const [menuList, setMenuList] = useState([]);
+    const [menuTree, setMenuTree] = useState([]);
     const [loading, setLoading] = useState(false);
     const [visible, setVisible] = useState(false);
     const [selectMenu, setSelectMenu] = useState(false);
     const [pagination, setPagination] = useState({
         current: 1,
         pageSize: 10,
-        hideOnSinglePage: true,
+        hideOnSinglePage: false,
         onChange: (e) => {
             let current = e;
             setPagination({ ...pagination, current });
@@ -96,6 +96,12 @@ function MenuTable(props) {
             payload: setMenuList,
         });
     }, []);
+    useEffect(() => {
+        dispatch({
+            type: 'menu/getMenuTree',
+            payload: setMenuTree,
+        });
+    }, []);
     return (
         <>
             <ProTable
@@ -117,6 +123,7 @@ function MenuTable(props) {
                 ]}
             />
             <OperModal
+                menuTree={menuTree}
                 selectMenu={selectMenu}
                 visible={visible}
                 onSubmit={submit}
